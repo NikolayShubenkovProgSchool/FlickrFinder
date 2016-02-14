@@ -49,6 +49,18 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE455C8D1C7123EC00404EF3 /* BaseProjectFiles */ = {
+			isa = PBXGroup;
+			children = (
+				CEC72B411C70F9AF00B0DBCB /* AppDelegate.swift */,
+				CEC72B451C70F9AF00B0DBCB /* Main.storyboard */,
+				CEC72B4A1C70F9AF00B0DBCB /* LaunchScreen.storyboard */,
+				CEC72B481C70F9AF00B0DBCB /* Assets.xcassets */,
+				CEC72B4D1C70F9AF00B0DBCB /* Info.plist */,
+			);
+			name = BaseProjectFiles;
+			sourceTree = "<group>";
+		};
 		CEC72B351C70F9AE00B0DBCB = {
 			isa = PBXGroup;
 			children = (
@@ -70,12 +82,8 @@
 		CEC72B401C70F9AF00B0DBCB /* FlikrFinder */ = {
 			isa = PBXGroup;
 			children = (
-				CEC72B411C70F9AF00B0DBCB /* AppDelegate.swift */,
+				CE455C8D1C7123EC00404EF3 /* BaseProjectFiles */,
 				CEC72B431C70F9AF00B0DBCB /* ViewController.swift */,
-				CEC72B451C70F9AF00B0DBCB /* Main.storyboard */,
-				CEC72B4A1C70F9AF00B0DBCB /* LaunchScreen.storyboard */,
-				CEC72B481C70F9AF00B0DBCB /* Assets.xcassets */,
-				CEC72B4D1C70F9AF00B0DBCB /* Info.plist */,
 			);
 			path = FlikrFinder;
 			sourceTree = "<group>";
