@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BC517AC5B28104102F533DC5 /* Pods_FlikrFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B90E693BF8A0C419581E60 /* Pods_FlikrFinder.framework */; };
 		CEC72B421C70F9AF00B0DBCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC72B411C70F9AF00B0DBCB /* AppDelegate.swift */; };
-		CEC72B441C70F9AF00B0DBCB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC72B431C70F9AF00B0DBCB /* ViewController.swift */; };
 		CEC72B471C70F9AF00B0DBCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEC72B451C70F9AF00B0DBCB /* Main.storyboard */; };
 		CEC72B491C70F9AF00B0DBCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC72B481C70F9AF00B0DBCB /* Assets.xcassets */; };
 		CEC72B4C1C70F9AF00B0DBCB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEC72B4A1C70F9AF00B0DBCB /* LaunchScreen.storyboard */; };
@@ -20,7 +19,6 @@
 		A2B90E693BF8A0C419581E60 /* Pods_FlikrFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlikrFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC72B3E1C70F9AE00B0DBCB /* FlikrFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlikrFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC72B411C70F9AF00B0DBCB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CEC72B431C70F9AF00B0DBCB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CEC72B461C70F9AF00B0DBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CEC72B481C70F9AF00B0DBCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEC72B4B1C70F9AF00B0DBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,6 +59,20 @@
 			name = BaseProjectFiles;
 			sourceTree = "<group>";
 		};
+		CE455C8E1C7124B800404EF3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE455C8F1C7124B800404EF3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CEC72B351C70F9AE00B0DBCB = {
 			isa = PBXGroup;
 			children = (
@@ -83,7 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				CE455C8D1C7123EC00404EF3 /* BaseProjectFiles */,
-				CEC72B431C70F9AF00B0DBCB /* ViewController.swift */,
+				CE455C8E1C7124B800404EF3 /* Controllers */,
+				CE455C8F1C7124B800404EF3 /* Models */,
 			);
 			path = FlikrFinder;
 			sourceTree = "<group>";
@@ -218,7 +231,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEC72B441C70F9AF00B0DBCB /* ViewController.swift in Sources */,
 				CEC72B421C70F9AF00B0DBCB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
