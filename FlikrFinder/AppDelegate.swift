@@ -14,13 +14,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+    {
+        UINavigationBar.appearance().barTintColor = UIColor.orangeColor()
+//            ..UIColor(red: 201 / 255, green: 81 / 255, blue: 0 / 255, alpha: 1.0)
+        
+        if let font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 22) {
+            UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: font]
+        }
+
+        UISearchBar.appearance().barTintColor = UIColor.orangeColor()
+        UISearchBar.appearance().tintColor = UIColor.whiteColor()
+        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).tintColor = UIColor.orangeColor()
+
         return true
     }
-    
-    
-    
-    
 }
-
