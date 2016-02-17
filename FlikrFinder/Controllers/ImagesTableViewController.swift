@@ -34,7 +34,7 @@ class ImagesTableViewController: UITableViewController {
     {
         super.viewDidAppear(animated)
         // устанавалием фон
-//        setupBackground()
+        setupBackground()
     }
 }
 
@@ -47,14 +47,14 @@ extension ImagesTableViewController
         self.tableView.opaque = false;
 //        self.tableView.backgroundView = UIImageView(image: UIImage(named: "logo"))
         let image: UIImage =  self.createImage()
-        self.tableView.backgroundView? = UIImageView(image: image)
+        self.tableView.backgroundView = UIImageView(image: image)
     }
     
     func createImage()->UIImage
     {
         UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, 0)
         let context = UIGraphicsGetCurrentContext()!
-        drawRadialGradientOfSize(self.view.frame.size, context: context)
+        drawRadialGradientOfSize(self.tableView.frame.size, context: context)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
@@ -63,22 +63,20 @@ extension ImagesTableViewController
     func drawRadialGradientOfSize(size:CGSize,context:CGContextRef)
     {
         CGContextSaveGState(context)
-        let colors = [UIColor.orangeColor().CGColor, UIColor.whiteColor().CGColor]
-        let positions:[CGFloat]  = [0.0, 1.0, 20.6, 30.9]
-        let startPoint = CGPointMake(100, 200)
-        let finishPoint = CGPointMake(300, 300)
+        let colors = [UIColor.orangeColor().CGColor, UIColor(red: 1.0, green: 175/255, blue: 105/255, alpha: 1.0).CGColor]
+        let positions:[CGFloat]  = [0.7,1.0]
+        let startPoint = CGPointMake(size.width / 2, size.height / 2)
+        let finishPoint = CGPointMake(size.width / 2, size.height / 2)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let gradient = CGGradientCreateWithColors(colorSpace, colors, positions)
-        CGContextDrawRadialGradient(context, gradient, startPoint, 20, finishPoint, 200, [])
+        CGContextDrawRadialGradient(context, gradient, startPoint, size.height  * 1.25, finishPoint, 0, [])
         CGContextRestoreGState(context)
     }
 }
 
-
 // MARK: - Table view data source
 extension ImagesTableViewController
 {
-    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
@@ -96,6 +94,16 @@ extension ImagesTableViewController
         cell.textLabel?.text = "row = " + String(indexPath.row)
         return cell
     }
+}
+
+//MARK:- Tablew view delegate
+extension ImagesTableViewController
+{
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+
 }
 
 //MARK:- logic
@@ -121,3 +129,4 @@ extension ImagesTableViewController: UISearchBarDelegate {
         searchBar.text = ""
     }
 }
+

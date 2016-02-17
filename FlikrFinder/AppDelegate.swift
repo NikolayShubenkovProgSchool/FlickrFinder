@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UISearchBar.appearance().barTintColor = UIColor.orangeColor()
         UISearchBar.appearance().tintColor = UIColor.whiteColor()
-        
         UITabBar.appearance().barTintColor = UIColor.orangeColor()
         UITabBar.appearance().tintColor = UIColor.whiteColor()
 
