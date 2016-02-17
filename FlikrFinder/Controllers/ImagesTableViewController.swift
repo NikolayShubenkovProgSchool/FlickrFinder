@@ -43,8 +43,11 @@ extension ImagesTableViewController
 {
     func setupBackground()
     {
-//        let image: UIImage =  //self.createImage()
-//        self.tableView.backgroundView? = UIImageView(image: UIImage(named: "logo"))
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.opaque = false;
+//        self.tableView.backgroundView = UIImageView(image: UIImage(named: "logo"))
+        let image: UIImage =  self.createImage()
+        self.tableView.backgroundView? = UIImageView(image: image)
     }
     
     func createImage()->UIImage
@@ -60,17 +63,13 @@ extension ImagesTableViewController
     func drawRadialGradientOfSize(size:CGSize,context:CGContextRef)
     {
         CGContextSaveGState(context)
-
-        let clipPath = UIBezierPath(roundedRect: CGRectMake(40, 40, size.width/2, size.width/1.5), byRoundingCorners: [.BottomLeft,.TopLeft], cornerRadii:CGSizeMake(10, 10))
-        
-        clipPath.addClip()
         let colors = [UIColor.orangeColor().CGColor, UIColor.whiteColor().CGColor]
-        let positions:[CGFloat]  = [0.2, 0.4, 0.6, 0.9]
-        let startPoint = CGPointMake(40, 40)
-        let finishPoint = CGPointMake(60, 60)
+        let positions:[CGFloat]  = [0.0, 1.0, 20.6, 30.9]
+        let startPoint = CGPointMake(100, 200)
+        let finishPoint = CGPointMake(300, 300)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let gradient = CGGradientCreateWithColors(colorSpace, colors, positions)
-        CGContextDrawRadialGradient(context, gradient, startPoint, 100, finishPoint, 20, [])
+        CGContextDrawRadialGradient(context, gradient, startPoint, 20, finishPoint, 200, [])
         CGContextRestoreGState(context)
     }
 }
@@ -105,7 +104,7 @@ extension ImagesTableViewController
     func filterContentForSearchText(searchText: String)
     {
         print("Метод поиска будет реализован в следующей версии")
-//        filteredCandies = candies.filter({( candy : Candy) -> Bool in
+        //        filteredCandies = candies.filter({( candy : Candy) -> Bool in
 //            let categoryMatch = (scope == "All") || (candy.category == scope)
 //            return categoryMatch && candy.name.lowercaseString.containsString(searchText.lowercaseString)
 //        })
@@ -119,5 +118,6 @@ extension ImagesTableViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         filterContentForSearchText(searchBar.text!)
+        searchBar.text = ""
     }
 }
