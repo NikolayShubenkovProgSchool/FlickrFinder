@@ -1,12 +1,6 @@
-//
-//  ImagesTableViewController.swift
-//  FlikrFinder
-//
-//  Created by Andrey on 16.02.16.
-//  Copyright © 2016 Andrey. All rights reserved.
-//
-
 import UIKit
+import ChameleonFramework
+
 
 class ImagesTableViewController: UITableViewController {
     
@@ -33,7 +27,6 @@ class ImagesTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
-        // устанавалием фон
         setupBackground()
     }
 }
@@ -45,10 +38,10 @@ extension ImagesTableViewController
     {
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.opaque = false;
-//        self.tableView.backgroundView = UIImageView(image: UIImage(named: "logo"))
         let image: UIImage =  self.createImage()
         self.tableView.backgroundView = UIImageView(image: image)
     }
+    
     
     func createImage()->UIImage
     {
@@ -92,6 +85,7 @@ extension ImagesTableViewController
         let  cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
         cell.textLabel?.text = "row = " + String(indexPath.row)
+//        cell.selectedBackgroundView.fra = ?.frame = UIImageView(
         return cell
     }
 }
@@ -101,6 +95,7 @@ extension ImagesTableViewController
 {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        print("indexpath: \(indexPath)")
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
@@ -130,3 +125,4 @@ extension ImagesTableViewController: UISearchBarDelegate {
     }
 }
 
+ 

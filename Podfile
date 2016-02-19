@@ -7,5 +7,6 @@ target 'FlikrFinder' do
     pod 'Alamofire', '~> 3.1'
     pod 'SDWebImage', '~> 3.7'
     pod 'MBProgressHUD', '~> 0.9.2'
+    pod 'ChameleonFramework', '~> 2.1.0'
 end
 
