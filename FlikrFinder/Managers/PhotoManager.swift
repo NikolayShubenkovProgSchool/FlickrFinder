@@ -27,8 +27,41 @@ parameters[@"method"] = @"flickr.photos.search";
 parameters[@"api_key"] = @"2b2c9f8abc28afe8d7749aee246d951c";
 */
 
+enum PlaceTypes: Int16
+{
+    case Country = 12
+    case Neighbourhood = 22
+    case Locality = 7
+    case Region = 8
+    case Continent = 29
+}
+
+
+
 class PhotoManager: NSObject {
+    
     static let apiURL = "https://api.flickr.com/services/rest/"
+    
+    
+    
+
+    
+    private func authrize(parametrs: [String: AnyObject]) -> [String: AnyObject]
+    {
+        var authParams = parametrs
+        authParams["api_key"] = "2b2c9f8abc28afe8d7749aee246d951c"
+        authParams["format"] = "json"
+        authParams["content_type"]   = 1
+        authParams["nojsoncallback"] = 1
+        return authParams
+    }
+
+}
+
+
+//MARK:- search photos of user
+extension PhotoManager
+{
     typealias PhotosComplition = (success:[Photo]?,failure:NSError?)->Void
     func findAllPhotosOfUser(id: String, complition: PhotosComplition)
     {
@@ -110,16 +143,58 @@ class PhotoManager: NSObject {
         
         return parsedPhotos
     }
+
+}
+
+//MARK:- Top places
+extension PhotoManager
+{
+    typealias PlacesComplition = (success:[Place]?,failure:NSError?)->Void
     
-    private func authrize(parametrs: [String: AnyObject]) -> [String: AnyObject]
+    func getTopPlacesWith(placeType: PlaceTypes, complition: PhotosComplition)
     {
-        var authParams = parametrs
-        authParams["api_key"] = "2b2c9f8abc28afe8d7749aee246d951c"
-        authParams["format"] = "json"
-        authParams["content_type"]   = 1
-        authParams["nojsoncallback"] = 1
-        return authParams
+        var placeAry: [Place] = [Place]()
+        var params = [String: AnyObject]()
+        params["method"] = "flickr.places.getTopPlacesList"
+        params["extras"] = "url_l,geo,date_taken,owner_name,url_s,description"
+        params = authrize(params)
+        
+        Alamofire.request(.GET,
+            PhotoManager.apiURL,
+            parameters: params,
+            encoding: .URL,
+            headers: nil)
+            .responseJSON { response -> Void in
+                if response.result.error != nil
+                {
+                    complition(success: nil, failure: response.result.error!)
+                    return
+                }
+                let results = self.parsePhotosFrom(response.result.value as! [String:AnyObject])
+                complition(success: results, failure: nil)
+        }
     }
+    
+    func parsePlacesFrom(info:[String:AnyObject])->[Place]?
+    {
+        return nil
+        //photos
+        //photo
+//        guard let photos = info["photos"] as? [String : AnyObject],
+//            let photo = photos["photo"] as? [ [String : AnyObject] ]
+//            else {
+//                return [Photo]()
+//        }
+//        
+//        var parsedPhotos = [Photo]()
+//        
+//        for info in photo {
+//            parsedPhotos.append(Photo(info: info))
+//        }
+//        
+//        return parsedPhotos
+    }
+
 }
 
 

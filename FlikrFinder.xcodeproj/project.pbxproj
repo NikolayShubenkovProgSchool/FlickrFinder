@@ -11,6 +11,7 @@
 		CE455C951C7394D700404EF3 /* ImagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE455C941C7394D700404EF3 /* ImagesTableViewController.swift */; };
 		CE455C971C739FAC00404EF3 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE455C961C739FAC00404EF3 /* Photo.swift */; };
 		CE742BE51C73B79E001B7A25 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE742BE41C73B79E001B7A25 /* PhotoManager.swift */; };
+		CE746C061C77A97500470163 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE746C051C77A97500470163 /* Place.swift */; };
 		CEC72B421C70F9AF00B0DBCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC72B411C70F9AF00B0DBCB /* AppDelegate.swift */; };
 		CEC72B471C70F9AF00B0DBCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEC72B451C70F9AF00B0DBCB /* Main.storyboard */; };
 		CEC72B491C70F9AF00B0DBCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC72B481C70F9AF00B0DBCB /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 		CE455C941C7394D700404EF3 /* ImagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesTableViewController.swift; sourceTree = "<group>"; };
 		CE455C961C739FAC00404EF3 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		CE742BE41C73B79E001B7A25 /* PhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
+		CE746C051C77A97500470163 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		CEC72B3E1C70F9AE00B0DBCB /* FlikrFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlikrFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC72B411C70F9AF00B0DBCB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEC72B461C70F9AF00B0DBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				CE455C961C739FAC00404EF3 /* Photo.swift */,
+				CE746C051C77A97500470163 /* Place.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				CEC72B421C70F9AF00B0DBCB /* AppDelegate.swift in Sources */,
 				CE455C951C7394D700404EF3 /* ImagesTableViewController.swift in Sources */,
 				CE742BE51C73B79E001B7A25 /* PhotoManager.swift in Sources */,
+				CE746C061C77A97500470163 /* Place.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

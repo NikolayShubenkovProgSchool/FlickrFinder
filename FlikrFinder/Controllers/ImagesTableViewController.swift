@@ -70,22 +70,18 @@ extension ImagesTableViewController
 // MARK: - Table view data source
 extension ImagesTableViewController
 {
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
-    {
-        return 1
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return 12 //self.searchedImages.count
     }
 
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
         let  cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
-        cell.textLabel?.text = "row = " + String(indexPath.row)
-//        cell.selectedBackgroundView.fra = ?.frame = UIImageView(
+
+        configureCell(cell,indexPath: indexPath)
+        
         return cell
     }
 }
@@ -104,6 +100,12 @@ extension ImagesTableViewController
 //MARK:- logic
 extension ImagesTableViewController
 {
+    // configure UITableview cell
+    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath)
+    {
+       cell.textLabel?.text = "row = " + String(indexPath.row)
+    }
+    
     func filterContentForSearchText(searchText: String)
     {
         print("Метод поиска будет реализован в следующей версии")
