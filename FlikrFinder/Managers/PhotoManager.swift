@@ -27,7 +27,7 @@ parameters[@"method"] = @"flickr.photos.search";
 parameters[@"api_key"] = @"2b2c9f8abc28afe8d7749aee246d951c";
 */
 
-enum PlaceTypes: Int16
+enum PlaceTypes: UInt16
 {
     case Country = 12
     case Neighbourhood = 22
@@ -151,12 +151,13 @@ extension PhotoManager
 {
     typealias PlacesComplition = (success:[Place]?,failure:NSError?)->Void
     
-    func getTopPlacesWith(placeType: PlaceTypes, complition: PhotosComplition)
+    func getTopPlacesWith(placeType: PlaceTypes, complition: PlacesComplition)
     {
-        var placeAry: [Place] = [Place]()
         var params = [String: AnyObject]()
+        
         params["method"] = "flickr.places.getTopPlacesList"
         params["extras"] = "url_l,geo,date_taken,owner_name,url_s,description"
+        params["place_type_id"] = String(placeType.rawValue)
         params = authrize(params)
         
         Alamofire.request(.GET,
@@ -170,29 +171,27 @@ extension PhotoManager
                     complition(success: nil, failure: response.result.error!)
                     return
                 }
-                let results = self.parsePhotosFrom(response.result.value as! [String:AnyObject])
+                let results = self.parsePlacesFrom(response.result.value as! [String:AnyObject])
                 complition(success: results, failure: nil)
         }
     }
     
     func parsePlacesFrom(info:[String:AnyObject])->[Place]?
     {
-        return nil
-        //photos
-        //photo
-//        guard let photos = info["photos"] as? [String : AnyObject],
-//            let photo = photos["photo"] as? [ [String : AnyObject] ]
-//            else {
-//                return [Photo]()
-//        }
-//        
-//        var parsedPhotos = [Photo]()
-//        
-//        for info in photo {
-//            parsedPhotos.append(Photo(info: info))
-//        }
-//        
-//        return parsedPhotos
+        //Places
+        //Place
+        guard let places = info["places"] as? [String : AnyObject],
+            let place = places["place"] as? [ [String : AnyObject] ]
+            else {
+                return [Place]()
+        }
+        var parsedPlaces = [Place]()
+
+        //place - массив словарей
+        for info in place {
+            parsedPlaces.append(Place(info: info))
+        }
+        return parsedPlaces
     }
 
 }

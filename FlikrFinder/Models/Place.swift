@@ -20,6 +20,7 @@ class Place: NSObject
     
     init(info:[String:AnyObject])
     {
+        jsonForDebug = info
         if let idValue = info["place_id"] as? String
         {
             placeId = idValue

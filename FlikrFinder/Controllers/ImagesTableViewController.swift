@@ -7,6 +7,7 @@ class ImagesTableViewController: UITableViewController {
     //MARK:- properties
     var filteredImages = [Photo]()
     var searchedImages = [Photo]()
+    var topPlaces = [Place]()
     let searchController = UISearchController(searchResultsController: nil)
     let photoManager = PhotoManager()
     
@@ -28,6 +29,7 @@ class ImagesTableViewController: UITableViewController {
     {
         super.viewDidAppear(animated)
         setupBackground()
+        refreshTopPlaces()
     }
 }
 
@@ -72,7 +74,7 @@ extension ImagesTableViewController
 {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 12 //self.searchedImages.count
+        return self.topPlaces.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -98,16 +100,14 @@ extension ImagesTableViewController
 }
 
 //MARK:- logic
-extension ImagesTableViewController
-{
+extension ImagesTableViewController {
     // configure UITableview cell
-    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath)
-    {
-       cell.textLabel?.text = "row = " + String(indexPath.row)
+    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
+        let place = self.topPlaces[indexPath.row]
+       cell.textLabel?.text = "placeName = \(place.placeName)  placeURL = \(place.placeURL)"
     }
     
-    func filterContentForSearchText(searchText: String)
-    {
+    func filterContentForSearchText(searchText: String) {
         print("Метод поиска будет реализован в следующей версии")
         //        filteredCandies = candies.filter({( candy : Candy) -> Bool in
 //            let categoryMatch = (scope == "All") || (candy.category == scope)
@@ -115,12 +115,21 @@ extension ImagesTableViewController
 //        })
 //        tableView.reloadData()
     }
+    
+    func refreshTopPlaces() {
+        photoManager.getTopPlacesWith(PlaceTypes.Country) { (success, failure) -> Void in
+            if failure != nil {
+                print(failure)
+            }
+            self.topPlaces = success!
+            self.tableView.reloadData()
+        }
+    }
 
 }
 
 // MARK: - UISearchBar Delegate
 extension ImagesTableViewController: UISearchBarDelegate {
-
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         filterContentForSearchText(searchBar.text!)
         searchBar.text = ""
