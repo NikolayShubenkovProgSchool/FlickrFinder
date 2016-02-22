@@ -1,9 +1,16 @@
+//
+//  PlacesTableViewController.swift
+//  FlikrFinder
+//
+//  Created by Andrey Torlopov on 22/02/16.
+//  Copyright © 2016 Andrey. All rights reserved.
+//
+
 import UIKit
 import ChameleonFramework
+import MBProgressHUD
 
-
-class ImagesTableViewController: UITableViewController {
-    
+class PlacesTableViewController: UITableViewController {
     //MARK:- properties
     var filteredImages = [Photo]()
     var searchedImages = [Photo]()
@@ -16,7 +23,7 @@ class ImagesTableViewController: UITableViewController {
     {
         super.viewDidLoad()
         // Setup the Search Controller
-//        searchController.searchResultsUpdater = self
+        //        searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Поиск не реализован"
         definesPresentationContext = true
@@ -33,8 +40,9 @@ class ImagesTableViewController: UITableViewController {
     }
 }
 
+
 //MARK: - setupBackground
-extension ImagesTableViewController
+extension UITableViewController
 {
     func setupBackground()
     {
@@ -43,8 +51,7 @@ extension ImagesTableViewController
         let image: UIImage =  self.createImage()
         self.tableView.backgroundView = UIImageView(image: image)
     }
-    
-    
+        
     func createImage()->UIImage
     {
         UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, 0)
@@ -70,18 +77,18 @@ extension ImagesTableViewController
 }
 
 // MARK: - Table view data source
-extension ImagesTableViewController
+extension PlacesTableViewController
 {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return self.topPlaces.count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let  cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
-
+        
         configureCell(cell,indexPath: indexPath)
         
         return cell
@@ -89,51 +96,83 @@ extension ImagesTableViewController
 }
 
 //MARK:- Tablew view delegate
-extension ImagesTableViewController
+extension PlacesTableViewController
 {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         print("indexpath: \(indexPath)")
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-
+    
 }
 
 //MARK:- logic
-extension ImagesTableViewController {
+extension PlacesTableViewController {
     // configure UITableview cell
     func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
         let place = self.topPlaces[indexPath.row]
-       cell.textLabel?.text = "placeName = \(place.placeName)  placeURL = \(place.placeURL)"
+        cell.textLabel?.text = place.placeName
+        cell.detailTextLabel?.text = place.coordinatesToString()
     }
     
     func filterContentForSearchText(searchText: String) {
         print("Метод поиска будет реализован в следующей версии")
         //        filteredCandies = candies.filter({( candy : Candy) -> Bool in
-//            let categoryMatch = (scope == "All") || (candy.category == scope)
-//            return categoryMatch && candy.name.lowercaseString.containsString(searchText.lowercaseString)
-//        })
-//        tableView.reloadData()
+        //            let categoryMatch = (scope == "All") || (candy.category == scope)
+        //            return categoryMatch && candy.name.lowercaseString.containsString(searchText.lowercaseString)
+        //        })
+        //        tableView.reloadData()
     }
     
     func refreshTopPlaces() {
-        photoManager.getTopPlacesWith(PlaceTypes.Country) { (success, failure) -> Void in
+        self.showIsBusy(true, animated: true)
+        photoManager.getTopPlacesWith(PlaceTypes.Neighbourhood) { (success, failure) -> Void in
             if failure != nil {
                 print(failure)
             }
             self.topPlaces = success!
             self.tableView.reloadData()
+            self.showIsBusy(false, animated: true)
         }
     }
-
+    
+    //bysy proccess
+    func showIsBusy(busy:Bool, animated:Bool)
+    {
+        if busy
+        {
+            MBProgressHUD.showHUDAddedTo(view, animated: animated)
+            return
+        }
+        MBProgressHUD.hideHUDForView(view, animated: animated)
+    }
+    
 }
 
 // MARK: - UISearchBar Delegate
-extension ImagesTableViewController: UISearchBarDelegate {
+extension PlacesTableViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         filterContentForSearchText(searchBar.text!)
         searchBar.text = ""
     }
 }
 
- 
+
+//MARK:- Segue
+extension PlacesTableViewController {
+
+    //unwind segue
+    @IBAction func close(segue: UIStoryboardSegue){
+        print("we're back again to PlacesTableViewController")        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "segShowPlacePhotos" {
+            let placePhotosVC = segue.destinationViewController as! PlacePhotosTableViewController
+            let selectedIndexPath = self.tableView.indexPathForSelectedRow!
+            placePhotosVC.place = self.topPlaces[selectedIndexPath.row]
+        }
+    
+    }
+}
+

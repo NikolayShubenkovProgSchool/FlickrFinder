@@ -27,8 +27,7 @@ parameters[@"method"] = @"flickr.photos.search";
 parameters[@"api_key"] = @"2b2c9f8abc28afe8d7749aee246d951c";
 */
 
-enum PlaceTypes: UInt16
-{
+enum PlaceTypes: Int32 {
     case Country = 12
     case Neighbourhood = 22
     case Locality = 7
@@ -36,6 +35,14 @@ enum PlaceTypes: UInt16
     case Continent = 29
 }
 
+enum FlickrPhotoParams: String {
+    case Tags = "tags"
+    case Latitude = "lat"
+    case Longitude = "lon"
+    case Radius = "radius"
+    case PlaceId = "place_id"
+    case UserId = "user_id"
+}
 
 
 class PhotoManager: NSObject {
@@ -89,17 +96,21 @@ extension PhotoManager
     }
     
     func find(searchName:String,
-        longitude:Double,
-        latitude:Double,
-        radius:Double,
+              longitude:Double,
+              latitude:Double,
+              radius:Double,
+        
         completion: PhotosComplition
         ){
             var params = [String:AnyObject]()
+            //
             params["tags"] = searchName
-            params["bbox"] = "bbox"
             params["lat"]  = latitude
             params["lon"]  = longitude
             params["radius"] = radius
+            //
+
+            params["bbox"] = "bbox"
             params["extras"] = "url_l,geo,date_taken,owner_name,url_s,description"
             params["format"] = "json"
             params["content_type"]   = 1
@@ -157,7 +168,10 @@ extension PhotoManager
         
         params["method"] = "flickr.places.getTopPlacesList"
         params["extras"] = "url_l,geo,date_taken,owner_name,url_s,description"
-        params["place_type_id"] = String(placeType.rawValue)
+        params["place_type_id"] = NSNumber(int: placeType.rawValue)
+        params["content_type"]   = 1
+        params["nojsoncallback"] = 1
+        
         params = authrize(params)
         
         Alamofire.request(.GET,

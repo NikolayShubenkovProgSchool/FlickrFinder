@@ -15,8 +15,8 @@ class Place: NSObject
     var placeURL: String = ""
     var photoCount: Int32 = 0
     var placeName: String = ""
-    
     var jsonForDebug: [String:AnyObject] = [String: AnyObject]()
+
     
     init(info:[String:AnyObject])
     {
@@ -57,6 +57,12 @@ class Place: NSObject
         }
         
         super.init()
+    }
+    
+    func coordinatesToString() -> String
+    {
+        
+        return "lat:\(self.coordinate.latitude) lon:\(self.coordinate.longitude)"
     }
     
 }
