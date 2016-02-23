@@ -27,22 +27,22 @@ parameters[@"method"] = @"flickr.photos.search";
 parameters[@"api_key"] = @"2b2c9f8abc28afe8d7749aee246d951c";
 */
 
-enum PlaceTypes: Int32 {
-    case Country = 12
-    case Neighbourhood = 22
-    case Locality = 7
-    case Region = 8
-    case Continent = 29
-}
-
-enum FlickrPhotoParams: String {
-    case Tags = "tags"
-    case Latitude = "lat"
-    case Longitude = "lon"
-    case Radius = "radius"
-    case PlaceId = "place_id"
-    case UserId = "user_id"
-}
+//enum PlaceTypes: Int32 {
+//    case Country = 12
+//    case Neighbourhood = 22
+//    case Locality = 7
+//    case Region = 8
+//    case Continent = 29
+//}
+//
+//enum FlickrPhotoParams: String {
+//    case Tags = "tags"
+//    case Latitude = "lat"
+//    case Longitude = "lon"
+//    case Radius = "radius"
+//    case PlaceId = "place_id"
+//    case UserId = "user_id"
+//}
 
 
 class PhotoManager: NSObject {
@@ -67,7 +67,7 @@ class PhotoManager: NSObject {
 //MARK:- search photos
 extension PhotoManager
 {
-    typealias PhotosComplition = (success:[Photo]?,failure:NSError?)->Void
+    
     private func setupParams(parametrs: [String: AnyObject]) -> [String: AnyObject]
     {
         var authParams = parametrs
@@ -84,9 +84,10 @@ extension PhotoManager
     {
         var params = [String: AnyObject]()
         params = setupParams(params)
-//        params["method"] = "flickr.photos.search"
         params["user_id"] = id
 //        params["extras"] = "url_l,geo,date_taken,owner_name,url_s,description"
+        //        params["method"] = "flickr.photos.search"
+
         params = authrize(params)
         
         Alamofire.request(.GET,
@@ -152,7 +153,7 @@ extension PhotoManager
 //MARK:- Top places
 extension PhotoManager
 {
-    typealias PlacesComplition = (success:[Place]?,failure:NSError?)->Void
+    
     
     func getTopPlacesWith(placeType: PlaceTypes, complition: PlacesComplition)
     {

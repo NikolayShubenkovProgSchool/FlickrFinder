@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ChameleonFramework
 import MBProgressHUD
 
 class PlacesTableViewController: UITableViewController {
@@ -16,7 +15,10 @@ class PlacesTableViewController: UITableViewController {
     var searchedImages = [Photo]()
     var topPlaces = [Place]()
     let searchController = UISearchController(searchResultsController: nil)
-    let photoManager = PhotoManager()
+
+    let photoManager: protocol<PhotoManagerDelegate> = FlickrAPI() // тут подсовываем любой класс для работы с фотками. Он должен поддерживать соответствующий протокол.
+    
+    var isBusy: Bool = false
     
     //MARK:- lifecycle
     override func viewDidLoad()
@@ -36,7 +38,9 @@ class PlacesTableViewController: UITableViewController {
     {
         super.viewDidAppear(animated)
         setupBackground()
-        refreshTopPlaces()
+        if self.topPlaces.count == 0 {
+            refreshTopPlaces()
+        }
     }
 }
 
@@ -124,15 +128,23 @@ extension PlacesTableViewController {
         //        tableView.reloadData()
     }
     
+    @IBAction func refreshButtonPressed(sender: AnyObject) {
+        if !isBusy {
+            self.isBusy = true
+            refreshTopPlaces()
+        }
+    }
+    
     func refreshTopPlaces() {
         self.showIsBusy(true, animated: true)
         photoManager.getTopPlacesWith(PlaceTypes.Neighbourhood) { (success, failure) -> Void in
             if failure != nil {
-                print(failure)
+                print("ERROR! \n****************\n \(failure) \n *********************")
             }
             self.topPlaces = success!
             self.tableView.reloadData()
             self.showIsBusy(false, animated: true)
+            self.isBusy = false;
         }
     }
     

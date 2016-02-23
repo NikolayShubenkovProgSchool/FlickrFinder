@@ -7,10 +7,16 @@
 //
 
 import UIKit
+import MBProgressHUD
+import SDWebImage
+
 
 class PlacePhotosTableViewController: UITableViewController {
     //MARK:- properties
     var place: Place?
+    var photoManager: protocol<PhotoManagerDelegate> = FlickrAPI()
+    var photos = [Photo]()
+    var isBusy: Bool = false
     
     //MARK:- lifecycle
     override func viewDidLoad() {
@@ -23,70 +29,82 @@ class PlacePhotosTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setupBackground()
+        if self.photos.count == 0 {
+            refreshPhotos()
+        }
     }
 }
-
 
 // MARK: - Table view data source
 extension PlacePhotosTableViewController
 {
-    
+
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return self.photos.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let  cellIdentifier = "Cell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+        configureCell(cell,indexPath: indexPath)
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+}
+
+
+//MARK:- logic
+extension PlacePhotosTableViewController {
+    
+    //bysy proccess
+    func showIsBusy(busy:Bool, animated:Bool)
+    {
+        if busy
+        {
+            MBProgressHUD.showHUDAddedTo(view, animated: animated)
+            return
+        }
+        MBProgressHUD.hideHUDForView(view, animated: animated)
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    // configure UITableview cell
+    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
+        let photo = self.photos[indexPath.row]
+        cell.textLabel?.text = photo.name
+        cell.imageView?.updateImageWith(photo)
     }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    func refreshPhotos() {
+        self.showIsBusy(true, animated: true)
+        photoManager.findPlacePhotos(place!.placeId) { (success, failure) -> Void in
+            self.photos = success!
+            self.tableView.reloadData()
+            self.showIsBusy(false, animated: true)
+            self.isBusy = false;
+            
+        }
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    @IBAction func refreshButtonPressed(sender: AnyObject) {
+        if !isBusy {
+            self.isBusy = true
+            self.refreshPhotos()
+        }        
     }
-    */
+    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+//MARK: - UIImageView Extention
+extension UIImageView {
+    func updateImageWith(photo:Photo?) {
+        guard let photoToApply = photo else {
+            self.image = nil
+            return
+        }
+        
+        sd_setImageWithURL(NSURL(string: photoToApply.photoURL),
+            placeholderImage: nil,
+            options: [ .ProgressiveDownload])
+        
     }
-    */
 }
