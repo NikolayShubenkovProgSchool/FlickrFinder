@@ -3,7 +3,7 @@
 import UIKit
 import Alamofire
 
-class FlickrAPI: NSObject, PhotoManagerDelegate {
+class FlickrAPI: NSObject {
 
     static let apiURL = "https://api.flickr.com/services/rest/"
     
@@ -26,9 +26,8 @@ class FlickrAPI: NSObject, PhotoManagerDelegate {
     }
 }
 
-
-//MARK:- Top places
-extension FlickrAPI
+//MARK:- PhotoManagerDelegate
+extension FlickrAPI: PhotoManagerDelegate
 {
     func getTopPlacesWith(placeType: PlaceTypes, complition: PlacesComplition)
     {
@@ -54,30 +53,6 @@ extension FlickrAPI
         }
     }
     
-    func parsePlacesFrom(info:[String:AnyObject])->[Place]?
-    {
-        //Places
-        //Place
-        guard let places = info["places"] as? [String : AnyObject],
-            let place = places["place"] as? [ [String : AnyObject] ]
-            else {
-                return [Place]()
-        }
-        var parsedPlaces = [Place]()
-        
-        //place - массив словарей
-        for info in place {
-            parsedPlaces.append(Place(info: info))
-        }
-        return parsedPlaces
-    }
-    
-}
-
-
-//MARK:- Photos
-extension FlickrAPI
-{
     func findPlacePhotos(placeId: String, complition: PhotosComplition) {
         var params = [String: AnyObject]()
         params["place_id"] = placeId
@@ -105,7 +80,31 @@ extension FlickrAPI
         }
     }
     
-    
+    func findUserPhotos(userId: String, complition: PhotosComplition) {
+        
+    }
+}
+
+
+//MARK:- private function
+extension FlickrAPI
+{
+    private func parsePlacesFrom(info:[String:AnyObject])->[Place]?
+    {
+        guard let places = info["places"] as? [String : AnyObject],
+            let place = places["place"] as? [ [String : AnyObject] ]
+            else {
+                return [Place]()
+        }
+        var parsedPlaces = [Place]()
+        
+        //place - массив словарей
+        for info in place {
+            parsedPlaces.append(Place(info: info))
+        }
+        return parsedPlaces
+    }
+
     private func parsePhotosFrom(info:[String:AnyObject])->[Photo] {
         //photos
         //photo
@@ -113,7 +112,7 @@ extension FlickrAPI
             let photo = photos["photo"] as? [ [String : AnyObject] ]
             else {
                 return [Photo]()
-        }        
+        }
         var parsedPhotos = [Photo]()
         for info in photo {
             parsedPhotos.append(Photo(info: info))
@@ -121,8 +120,5 @@ extension FlickrAPI
         
         return parsedPhotos
     }
-    
-    func findUserPhotos(userId: String, complition: PhotosComplition) {
-        
-    }
+
 }

@@ -33,3 +33,5 @@ protocol PhotoManagerDelegate {
     func findPlacePhotos(placeId: String, complition:  PhotosComplition)
     func findUserPhotos(userId: String, complition:  PhotosComplition)
 }
+
+

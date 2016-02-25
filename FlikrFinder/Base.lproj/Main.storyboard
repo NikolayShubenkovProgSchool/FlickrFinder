@@ -108,6 +108,9 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="Hff-AC-QEN" kind="show" id="RSu-ms-a0s"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -131,22 +134,80 @@
             </objects>
             <point key="canvasLocation" x="1656" y="1"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Photo View Controller-->
+        <scene sceneID="9cJ-rb-QWe">
+            <objects>
+                <viewController id="Hff-AC-QEN" customClass="PhotoViewController" customModule="FlikrFinder" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bBA-6S-vtt"/>
+                        <viewControllerLayoutGuide type="bottom" id="4Ad-bV-Gdv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Yd5-ic-0cP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.5" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="pQB-jD-Puy">
+                                <rect key="frame" x="0.0" y="64" width="320" height="372"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qzY-Nm-8JA">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" priority="100" constant="320" id="8Id-nQ-9TR"/>
+                                            <constraint firstAttribute="height" priority="100" constant="372" id="FhR-My-Ihk"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="qzY-Nm-8JA" secondAttribute="bottom" id="GrR-zO-ECV"/>
+                                    <constraint firstItem="qzY-Nm-8JA" firstAttribute="leading" secondItem="pQB-jD-Puy" secondAttribute="leading" id="RRY-6z-sY4"/>
+                                    <constraint firstAttribute="trailing" secondItem="qzY-Nm-8JA" secondAttribute="trailing" id="b0I-wg-KXw"/>
+                                    <constraint firstItem="qzY-Nm-8JA" firstAttribute="top" secondItem="pQB-jD-Puy" secondAttribute="top" id="dQj-VU-XHx"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="pQB-jD-Puy" secondAttribute="trailing" id="FKS-zy-SzY"/>
+                            <constraint firstItem="pQB-jD-Puy" firstAttribute="top" secondItem="bBA-6S-vtt" secondAttribute="bottom" id="NVY-uF-fTE"/>
+                            <constraint firstItem="pQB-jD-Puy" firstAttribute="leading" secondItem="Yd5-ic-0cP" secondAttribute="leading" id="TkX-8m-kT3"/>
+                            <constraint firstItem="4Ad-bV-Gdv" firstAttribute="top" secondItem="pQB-jD-Puy" secondAttribute="bottom" id="qgt-Vd-wB2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="qzY-Nm-8JA" id="2oY-OX-CQp"/>
+                        <outlet property="scrollView" destination="pQB-jD-Puy" id="bQ7-LM-LIb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eH6-A9-uk4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2115" y="1"/>
+        </scene>
+        <!--History Table View Controller-->
         <scene sceneID="zuT-PI-Sy3">
             <objects>
-                <tableViewController id="Yp4-17-THS" sceneMemberID="viewController">
+                <tableViewController id="Yp4-17-THS" customClass="HistoryTableViewController" customModule="FlikrFinder" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="4Dx-Oq-VPO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QPi-zz-frD">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="1fa-vp-RPL" style="IBUITableViewCellStyleDefault" id="QPi-zz-frD">
                                 <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QPi-zz-frD" id="mXm-ZF-4Ua">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1fa-vp-RPL">
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>

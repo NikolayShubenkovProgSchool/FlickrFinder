@@ -11,6 +11,7 @@ import MBProgressHUD
 import SDWebImage
 
 
+//MARK:- lifecycle
 class PlacePhotosTableViewController: UITableViewController {
     //MARK:- properties
     var place: Place?
@@ -18,7 +19,6 @@ class PlacePhotosTableViewController: UITableViewController {
     var photos = [Photo]()
     var isBusy: Bool = false
     
-    //MARK:- lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         print(place)
@@ -46,7 +46,8 @@ extension PlacePhotosTableViewController
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let  cellIdentifier = "Cell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
-        configureCell(cell,indexPath: indexPath)
+        let photo = photos[indexPath.row]
+        configureCell(cell,photo: photo)
         return cell
     }
 
@@ -67,13 +68,7 @@ extension PlacePhotosTableViewController {
         MBProgressHUD.hideHUDForView(view, animated: animated)
     }
 
-    // configure UITableview cell
-    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
-        let photo = self.photos[indexPath.row]
-        cell.textLabel?.text = photo.name
-        cell.imageView?.updateImageWith(photo)
-    }
-
+    
     func refreshPhotos() {
         self.showIsBusy(true, animated: true)
         photoManager.findPlacePhotos(place!.placeId) { (success, failure) -> Void in
@@ -89,9 +84,8 @@ extension PlacePhotosTableViewController {
         if !isBusy {
             self.isBusy = true
             self.refreshPhotos()
-        }        
+        }
     }
-    
 }
 
 //MARK: - UIImageView Extention
@@ -102,9 +96,40 @@ extension UIImageView {
             return
         }
         
+        //FIXME: закачка фотографии происходит когда она выбирается в списке или проматывается за пределы экрана
         sd_setImageWithURL(NSURL(string: photoToApply.photoURL),
             placeholderImage: nil,
             options: [ .ProgressiveDownload])
         
     }
 }
+
+
+//MARK:- segue
+extension PlacePhotosTableViewController
+{
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if let photoVC = segue.destinationViewController as? PhotoViewController
+          ,let photo: Photo = photos[(tableView.indexPathForSelectedRow?.row)!]
+          
+        {
+            photoVC.photo = photo
+        }
+    }
+}
+
+//MARK:- TableViewController
+extension UITableViewController {
+    // configure UITableview cell
+    func configureCell(cell: UITableViewCell, photo: Photo) {
+        cell.textLabel?.text = photo.name
+        cell.imageView?.updateImageWith(photo)
+    }
+
+}
+
+
+
+
+

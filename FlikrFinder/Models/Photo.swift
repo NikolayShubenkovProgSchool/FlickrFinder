@@ -17,8 +17,10 @@ class Photo: NSObject, MKAnnotation  {
         return name
     }
     var ownerId: String = ""
+    var jsonDebug: [String: AnyObject]
     
     init(info:[String:AnyObject]){
+        jsonDebug = info
         if let parsedName = info["title"] as? String {
             name = parsedName
         }
@@ -40,6 +42,8 @@ class Photo: NSObject, MKAnnotation  {
         {
             self.ownerId = ownerValue
         }
+        
+        
         super.init()
      }
 }

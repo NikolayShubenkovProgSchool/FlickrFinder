@@ -153,8 +153,6 @@ extension PhotoManager
 //MARK:- Top places
 extension PhotoManager
 {
-    
-    
     func getTopPlacesWith(placeType: PlaceTypes, complition: PlacesComplition)
     {
         var params = [String: AnyObject]()
