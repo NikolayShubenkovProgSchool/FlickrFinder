@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -147,31 +148,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.5" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="pQB-jD-Puy">
-                                <rect key="frame" x="0.0" y="64" width="320" height="372"/>
+                                <rect key="frame" x="-4" y="64" width="328" height="422"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qzY-Nm-8JA">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
+                                        <rect key="frame" x="10" y="10" width="100" height="100"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" priority="100" constant="320" id="8Id-nQ-9TR"/>
-                                            <constraint firstAttribute="height" priority="100" constant="372" id="FhR-My-Ihk"/>
+                                            <constraint firstAttribute="width" priority="100" constant="100" id="CHx-Tp-JwI"/>
+                                            <constraint firstAttribute="height" priority="100" constant="100" id="tLN-k0-fKU"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="qzY-Nm-8JA" secondAttribute="bottom" id="GrR-zO-ECV"/>
-                                    <constraint firstItem="qzY-Nm-8JA" firstAttribute="leading" secondItem="pQB-jD-Puy" secondAttribute="leading" id="RRY-6z-sY4"/>
-                                    <constraint firstAttribute="trailing" secondItem="qzY-Nm-8JA" secondAttribute="trailing" id="b0I-wg-KXw"/>
-                                    <constraint firstItem="qzY-Nm-8JA" firstAttribute="top" secondItem="pQB-jD-Puy" secondAttribute="top" id="dQj-VU-XHx"/>
+                                    <constraint firstAttribute="trailing" secondItem="qzY-Nm-8JA" secondAttribute="trailing" constant="10" id="C75-CC-Ebp"/>
+                                    <constraint firstItem="qzY-Nm-8JA" firstAttribute="leading" secondItem="pQB-jD-Puy" secondAttribute="leading" constant="10" id="nFf-HF-B8P"/>
+                                    <constraint firstItem="qzY-Nm-8JA" firstAttribute="top" secondItem="pQB-jD-Puy" secondAttribute="top" constant="10" id="ojg-Py-HYc"/>
+                                    <constraint firstAttribute="bottom" secondItem="qzY-Nm-8JA" secondAttribute="bottom" constant="10" id="tkW-Eb-CDS"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="pQB-jD-Puy" secondAttribute="trailing" id="FKS-zy-SzY"/>
-                            <constraint firstItem="pQB-jD-Puy" firstAttribute="top" secondItem="bBA-6S-vtt" secondAttribute="bottom" id="NVY-uF-fTE"/>
-                            <constraint firstItem="pQB-jD-Puy" firstAttribute="leading" secondItem="Yd5-ic-0cP" secondAttribute="leading" id="TkX-8m-kT3"/>
-                            <constraint firstItem="4Ad-bV-Gdv" firstAttribute="top" secondItem="pQB-jD-Puy" secondAttribute="bottom" id="qgt-Vd-wB2"/>
+                            <constraint firstItem="pQB-jD-Puy" firstAttribute="top" secondItem="bBA-6S-vtt" secondAttribute="bottom" id="GCy-nb-mbw"/>
+                            <constraint firstItem="pQB-jD-Puy" firstAttribute="leading" secondItem="Yd5-ic-0cP" secondAttribute="leadingMargin" constant="-20" id="bBt-Dj-nCK"/>
+                            <constraint firstItem="pQB-jD-Puy" firstAttribute="top" secondItem="bBA-6S-vtt" secondAttribute="bottom" id="dfw-51-ZKQ"/>
+                            <constraint firstAttribute="trailing" secondItem="pQB-jD-Puy" secondAttribute="trailing" id="e4H-Dc-TmH"/>
+                            <constraint firstItem="4Ad-bV-Gdv" firstAttribute="top" secondItem="pQB-jD-Puy" secondAttribute="bottom" constant="-50" id="mvN-xt-kxc"/>
+                            <constraint firstItem="4Ad-bV-Gdv" firstAttribute="top" secondItem="pQB-jD-Puy" secondAttribute="bottom" id="pHg-WB-fpl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pQB-jD-Puy" secondAttribute="trailing" constant="-20" id="s37-de-yaz"/>
+                            <constraint firstItem="pQB-jD-Puy" firstAttribute="leading" secondItem="Yd5-ic-0cP" secondAttribute="leading" id="wo8-aZ-ux9"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="GCy-nb-mbw"/>
+                                <exclude reference="e4H-Dc-TmH"/>
+                                <exclude reference="wo8-aZ-ux9"/>
+                                <exclude reference="pHg-WB-fpl"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="qzY-Nm-8JA" id="2oY-OX-CQp"/>
