@@ -90,16 +90,23 @@ extension PlacePhotosTableViewController {
 
 //MARK: - UIImageView Extention
 extension UIImageView {
-    func updateImageWith(photo:Photo?) {
+    func updateImageWith(photo:Photo?,completion:(Void->Void)) {
         guard let photoToApply = photo else {
             self.image = nil
             return
         }
         
+        let placeholder = UIImage()
         //FIXME: закачка фотографии происходит когда она выбирается в списке или проматывается за пределы экрана
-        sd_setImageWithURL(NSURL(string: photoToApply.photoURL),
-            placeholderImage: nil,
-            options: [ .ProgressiveDownload])
+//        sd_setImageWithURL(NSURL(string: photoToApply.photoURL),
+//            placeholderImage: placeholder,
+//            options: [ .ProgressiveDownload])
+        sd_setImageWithURL(NSURL(string: photoToApply.photoURL), placeholderImage: nil) { (image, error, _, _) -> Void in
+            if error == nil{
+                self.image = image
+                completion()
+            }
+        }
         
     }
 }
@@ -124,7 +131,28 @@ extension UITableViewController {
     // configure UITableview cell
     func configureCell(cell: UITableViewCell, photo: Photo) {
         cell.textLabel?.text = photo.name
+        //в общем тут не все так просто
+        //оказалось, что таблица настраивает фрейм ячейки перед тем как показать на экране.
+        //поэтому нужно после закачки картинки
+        //перезагрузить конкретную ячейку
         cell.imageView?.updateImageWith(photo)
+            {
+            
+            //если картинка скачается перезагрузим ее. 
+            //чтобы перезагрузить нужно узнать индекс ячейки,
+            //но если таблица еще не успела вывести ячейку на экран
+            //то мы не сможем ее перезагрузить
+            //поэтому запросим ячейку через мгновение после закачки
+            //обсуждение https://github.com/AFNetworking/AFNetworking/issues/277
+            NSOperationQueue.mainQueue().addOperationWithBlock({ ()  -> Void in
+                
+                
+                if let index = self.tableView.indexPathForCell(cell)
+                {
+                    self.tableView.reloadRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.None)
+                }
+            })
+        }
     }
 
 }
